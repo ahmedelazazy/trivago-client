@@ -1,29 +1,45 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Hoteliers from "../views/Hoteliers.vue";
+import HotelierItems from "../views/HotelierItems.vue";
+import HotelierItem from "../views/HotelierItem.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: "/",
+    name: "Hoteliers",
+    component: Hoteliers,
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
+    path: "/hotelier/:id",
+    name: "HotelierItems",
+    component: HotelierItems,
+  },
+  {
+    path: "/hotelier/:hotelierId/add",
+    name: "add-hotelier-item",
+    component: HotelierItem,
+  },
+
+  {
+    path: "/hotelier/:hotelierId/view/:id",
+    name: "view-hotelier-item",
+    component: HotelierItem,
+  },
+
+  {
+    path: "/hotelier/:hotelierId/edit/:id",
+    name: "edit-hotelier-item",
+    component: HotelierItem,
+  },
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
