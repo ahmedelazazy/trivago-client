@@ -12,6 +12,8 @@ https://trivago.ahmedelazazy.com
 
 ## Getting started
 
+Make sure to get the API running first. Check the [The API](https://github.com/ahmedelazazy/trivago) to get it started.
+
 - Clone this repo `git clone`
 - Build and initialize the container
 
@@ -20,4 +22,4 @@ cd trivago-client
 docker-compose up -d --build
 ```
 
-- Browse the app on `localhost:8080`
+- Browse the app on http://localhost:8080
