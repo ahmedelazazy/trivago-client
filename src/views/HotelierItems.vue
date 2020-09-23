@@ -198,4 +198,30 @@ export default {
     }
   }
 }
+
+@media (max-width: 767px) {
+  .HotelierItems {
+    .items {
+      .item {
+        flex-direction: column;
+        .image-holder {
+          width: 100%;
+          height: 200px;
+        }
+
+        .col {
+          flex-direction: column;
+          padding: 20px;
+          text-align: center;
+          h3 {
+            margin: 0;
+          }
+          .price {
+            margin-top: 20px;
+          }
+        }
+      }
+    }
+  }
+}
 </style>

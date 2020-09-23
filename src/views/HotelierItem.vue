@@ -393,4 +393,40 @@ export default {
     }
   }
 }
+
+@media (max-width: 767px) {
+  .HotelierItem {
+    .container {
+      flex-direction: column;
+
+      .preview {
+        margin: 0 auto 30px auto;
+        img {
+          margin: auto;
+        }
+      }
+
+      form {
+        padding: 0 20px;
+      }
+
+      .control-wrapper {
+        .form-control {
+          width: 100%;
+        }
+      }
+
+      label {
+        width: 100%;
+        text-align: left;
+      }
+
+      .buttons {
+        margin: 20px 0 0 0;
+        display: flex;
+        justify-content: space-evenly;
+      }
+    }
+  }
+}
 </style>

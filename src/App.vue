@@ -24,6 +24,7 @@ export default {
   padding: 0 20px;
   margin: auto;
   line-height: 1.5;
+  min-width: 320px;
   & > a {
     display: flex;
   }
@@ -45,6 +46,12 @@ export default {
   a:hover {
     color: #0275d8;
     text-decoration: underline;
+    cursor: pointer;
+  }
+
+  button,
+  .btn {
+    cursor: pointer;
   }
 }
 .link {

@@ -46,4 +46,16 @@ export default {
     }
   }
 }
+
+@media (max-width: 767px) {
+  .Hoteliers {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 575px) {
+  .Hoteliers {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
