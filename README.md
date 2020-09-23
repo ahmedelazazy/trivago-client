@@ -1,23 +1,22 @@
-# trivago-client
+# Trivago
 
-## Project setup
+A frontend app for Trivago booking API for hoteliers. This repo only has the code of the frontend. The API repo is [here](https://github.com/ahmedelazazy/trivago).
+
+## Demo
+
+https://trivago.ahmedelazazy.com
+
+## Stack
+
+- Vue
+
+## Getting started
+
+- Clone this repo `git clone`
+- Build and initialize the container
 
 ```
-npm install
+docker-compose up -d --build
 ```
 
-### Compiles and hot-reloads for development
-
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-
-```
-npm run build
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- Browse the app on `localhost:8080`
