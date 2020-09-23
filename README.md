@@ -16,6 +16,7 @@ https://trivago.ahmedelazazy.com
 - Build and initialize the container
 
 ```
+cd trivago-client
 docker-compose up -d --build
 ```
 
