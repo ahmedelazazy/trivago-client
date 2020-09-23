@@ -1,8 +1,11 @@
 <template>
   <div class="HotelierItem">
-    <h1>{{ title }}</h1>
+    <div class="header">
+      <h1>{{ title }}</h1>
+      <router-link :to="`/hotelier/${item.hotelierId}`" tag="a"> Back</router-link>
+    </div>
     <!-- <router-link :to="`/hotelier/${item.hotelierId}`">Back</router-link> -->
-    <div class="container">
+    <div class="container" :class="{ disabled }">
       <div class="preview">
         <img :src="item.image ? item.image : require('@/assets/placeholder-image.png')" />
       </div>
@@ -10,19 +13,19 @@
       <form @submit.prevent="save" novalidate>
         <div class="control-wrapper">
           <label for="name">Name</label>
-          <input type="text" v-model="item.name" class="form-control" id="name" required name="name" :readonly="readonly" />
+          <input type="text" v-model="item.name" class="form-control" id="name" required name="name" :disabled="disabled" />
           <p class="error" v-if="errors.name">{{ errors.name }}</p>
         </div>
 
         <div class="control-wrapper">
           <label for="rating">Rating</label>
-          <input type="number" v-model="item.rating" class="form-control" id="rating" required name="rating" :readonly="readonly" min="0" max="5" />
+          <input type="number" v-model="item.rating" class="form-control" id="rating" required name="rating" :disabled="disabled" min="0" max="5" />
           <p class="error" v-if="errors.rating">{{ errors.rating }}</p>
         </div>
 
         <div class="control-wrapper">
           <label for="rating">Category</label>
-          <select v-model="item.category" class="form-control" id="category" required name="category" :readonly="readonly">
+          <select v-model="item.category" class="form-control" id="category" required name="category" :disabled="disabled">
             <option value="hotel">Hotel</option>
             <option value="alternative">Alternative</option>
             <option value="hostel">Hostel</option>
@@ -35,59 +38,59 @@
 
         <div class="control-wrapper">
           <label for="rating">City</label>
-          <input type="text" v-model="item.location.city" class="form-control" id="city" required name="city" :readonly="readonly" />
+          <input type="text" v-model="item.location.city" class="form-control" id="city" required name="city" :disabled="disabled" />
           <p class="error" v-if="errors.city">{{ errors.city }}</p>
         </div>
 
         <div class="control-wrapper">
           <label for="rating">State</label>
-          <input type="text" v-model="item.location.state" class="form-control" id="state" required name="state" :readonly="readonly" />
+          <input type="text" v-model="item.location.state" class="form-control" id="state" required name="state" :disabled="disabled" />
           <p class="error" v-if="errors.state">{{ errors.state }}</p>
         </div>
 
         <div class="control-wrapper">
           <label for="rating">Country</label>
-          <input type="text" v-model="item.location.country" class="form-control" id="country" required name="country" :readonly="readonly" />
+          <input type="text" v-model="item.location.country" class="form-control" id="country" required name="country" :disabled="disabled" />
           <p class="error" v-if="errors.country">{{ errors.country }}</p>
         </div>
 
         <div class="control-wrapper">
           <label for="rating">Zip Code</label>
-          <input type="text" v-model="item.location.zip_code" class="form-control" id="zip_code" required name="zip_code" :readonly="readonly" />
+          <input type="text" v-model="item.location.zip_code" class="form-control" id="zip_code" required name="zip_code" :disabled="disabled" />
           <p class="error" v-if="errors.zip_code">{{ errors.zip_code }}</p>
         </div>
 
         <div class="control-wrapper">
           <label for="rating">Address</label>
-          <input type="text" v-model="item.location.address" class="form-control" id="address" required name="address" :readonly="readonly" />
+          <input type="text" v-model="item.location.address" class="form-control" id="address" required name="address" :disabled="disabled" />
           <p class="error" v-if="errors.address">{{ errors.address }}</p>
         </div>
 
         <div class="control-wrapper">
           <label for="rating">Image URL</label>
-          <input type="text" v-model="item.image" class="form-control" id="image" required name="image" :readonly="readonly" />
+          <input type="text" v-model="item.image" class="form-control" id="image" required name="image" :disabled="disabled" />
           <p class="error" v-if="errors.image">{{ errors.image }}</p>
         </div>
         <div class="control-wrapper">
           <label for="rating">Reputation</label>
-          <input type="number" v-model="item.reputation" class="form-control" id="reputation" required name="reputation" :readonly="readonly" />
+          <input type="number" v-model="item.reputation" class="form-control" id="reputation" required name="reputation" :disabled="disabled" />
           <p class="error" v-if="errors.reputation">{{ errors.reputation }}</p>
         </div>
 
         <div class="control-wrapper" v-if="mode === 'view'">
-          <label for="rating">Reputation Badge</label>
-          <input type="text" v-model="item.reputationBadge" class="form-control" id="reputationBadge" required name="reputationBadge" :readonly="readonly" />
+          <label for="rating">Badge</label>
+          <input type="text" v-model="item.reputationBadge" class="form-control" id="reputationBadge" required name="reputationBadge" :disabled="disabled" />
         </div>
 
         <div class="control-wrapper">
           <label for="rating">Price</label>
-          <input type="number" v-model="item.price" class="form-control" id="price" required name="price" :readonly="readonly" />
+          <input type="number" v-model="item.price" class="form-control" id="price" required name="price" :disabled="disabled" />
           <p class="error" v-if="errors.price">{{ errors.price }}</p>
         </div>
 
         <div class="control-wrapper">
           <label for="rating">Availability</label>
-          <input type="number" v-model="item.availability" class="form-control" id="availability" required name="availability" :readonly="readonly" />
+          <input type="number" v-model="item.availability" class="form-control" id="availability" required name="availability" :disabled="disabled" />
           <p class="error" v-if="errors.availability">{{ errors.availability }}</p>
         </div>
 
@@ -171,13 +174,13 @@ export default {
     }
 
     if (this.mode == "view" || this.mode == "edit") {
-      axios.get(`/hotelier-item/${this.$route.params.id}`).then((response) => {
+      axios.get(`/hoteliers/items/${this.$route.params.id}`).then((response) => {
         this.item = response.data;
       });
     }
   },
   computed: {
-    readonly() {
+    disabled() {
       return this.mode == "view";
     },
     hasErrors() {
@@ -193,11 +196,11 @@ export default {
 
       try {
         if (this.mode === "add") {
-          await axios.post(`/hotelier-item`, this.item);
+          await axios.post(`/hoteliers/items`, this.item);
         }
 
         if (this.mode === "edit") {
-          await axios.put(`/hotelier-item/${this.item.id}`, this.item);
+          await axios.put(`/hoteliers/items/${this.item.id}`, this.item);
         }
 
         this.$router.push(`/hotelier/${this.item.hotelierId}`);
@@ -304,10 +307,16 @@ export default {
   border: 1px solid #eee;
   margin-bottom: 20px;
 
-  h1 {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
     background: #eee;
-    padding: 15px;
+    padding: 15px 25px;
     margin-bottom: 30px;
+  }
+
+  h1 {
   }
 
   .container {
@@ -373,6 +382,15 @@ export default {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+  }
+
+  .disabled {
+    input,
+    select {
+      border: 1px solid #00000010;
+      background: #fff;
+      color: #000;
+    }
   }
 }
 </style>

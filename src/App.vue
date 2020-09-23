@@ -23,6 +23,7 @@ export default {
   max-width: 100%;
   padding: 0 20px;
   margin: auto;
+  line-height: 1.5;
   & > a {
     display: flex;
   }

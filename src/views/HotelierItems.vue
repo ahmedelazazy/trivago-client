@@ -17,8 +17,9 @@
               <p>{{ item.location.state }}, {{ item.location.country }}</p>
 
               <router-link :to="`/hotelier/${hotelierId}/view/${item.id}`">View</router-link> | <router-link :to="`/hotelier/${hotelierId}/edit/${item.id}`">Edit</router-link> |
-              <a href="#" @click.prevent="remove(item.id, item.name)">Delete</a> |
-              <a v-if="item.availability !== 0" href="#" @click.prevent="book(item.id, item.name)">Book</a>
+              <a href="#" @click.prevent="removeClick(item.id, item.name)">Delete</a>
+              |
+              <a v-if="item.availability !== 0" href="#" @click.prevent="bookClick(item.id, item.name)">Book</a>
             </div>
 
             <div class="price">
@@ -30,20 +31,28 @@
       </div>
     </div>
     <div class="no-data" v-if="!hotelierItems || !hotelierItems.length">No items found. <router-link :to="`/hotelier/${hotelierId}/add`">Add the first item</router-link>.</div>
+
+    <ModalVue v-if="showDeleteModal" @close="showDeleteModal = false" @confirm="remove" :id="selectedId" :message="`Are you sure to delete ${selectedName}`"></ModalVue>
+    <ModalVue v-if="showBookModal" @close="showBookModal = false" @confirm="book" :id="selectedId" :message="`Are you sure to book ${selectedName}`"></ModalVue>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import ModalVue from "../components/Modal.vue";
 
 export default {
   name: "HotelierItems",
-
+  components: { ModalVue },
   data() {
     return {
       hotelierId: null,
       hotelierName: null,
       hotelierItems: [],
+      showDeleteModal: false,
+      showBookModal: false,
+      selectedId: null,
+      selectedName: null,
     };
   },
 
@@ -53,7 +62,7 @@ export default {
   },
   methods: {
     async reset() {
-      axios.get(`/hotelier/${this.hotelierId}`).then((response) => {
+      axios.get(`/hoteliers/${this.hotelierId}`).then((response) => {
         this.hotelierName = response.data.name;
         if (response.data.hotelier_items) {
           this.hotelierItems = response.data.hotelier_items.sort((a, b) => a.id - b.id);
@@ -61,27 +70,35 @@ export default {
       });
     },
 
-    async remove(id, name) {
-      const answer = confirm(`Are you sure to delete ${name}?`);
-      if (!answer) return;
+    removeClick(id, name) {
+      this.showDeleteModal = true;
+      this.selectedId = id;
+      this.selectedName = name;
+    },
 
+    async remove(id) {
       try {
-        await axios.delete(`/hotelier-item/${id}`);
+        this.showDeleteModal = false;
+        await axios.delete(`/hoteliers/items/${id}`);
         await this.reset();
       } catch (error) {
-        alert("Unexpected error happened.");
+        console.error(error);
       }
     },
 
-    async book(id, name) {
-      const answer = confirm(`Are you sure to book ${name}?`);
-      if (!answer) return;
+    bookClick(id, name) {
+      this.showBookModal = true;
+      this.selectedId = id;
+      this.selectedName = name;
+    },
 
+    async book(id, name) {
+      this.showBookModal = false;
       try {
-        await axios.put(`/hotelier-item/book/${id}`);
+        await axios.patch(`/hoteliers/items/${id}/availability`);
         await this.reset();
       } catch (error) {
-        alert("Unexpected error happened.");
+        console.error(error);
       }
     },
   },
@@ -109,6 +126,11 @@ export default {
       border: 1px solid #eee;
       border-radius: 5px;
       margin: 20px 0;
+
+      &:hover {
+        box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+      }
+
       .image-holder {
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;

@@ -4,7 +4,7 @@ import router from "./router";
 import store from "./store";
 import axios from "axios";
 
-axios.defaults.baseURL = process.env.VUE_APP_API_URL;
+axios.defaults.baseURL = process.env.VUE_APP_API_URL + "/api/v1";
 
 Vue.config.productionTip = false;
 

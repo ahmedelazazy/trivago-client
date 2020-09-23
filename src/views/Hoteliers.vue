@@ -15,7 +15,7 @@ export default {
     hoteliers: null,
   }),
   mounted() {
-    axios.get("/hotelier").then((response) => {
+    axios.get("/hoteliers").then((response) => {
       this.hoteliers = response.data;
     });
   },
@@ -33,6 +33,9 @@ export default {
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:hover {
       box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
