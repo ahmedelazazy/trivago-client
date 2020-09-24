@@ -2,10 +2,6 @@
 
 A frontend app for Trivago booking API for hoteliers. This repo only has the code of the frontend. The API repo is [here](https://github.com/ahmedelazazy/trivago).
 
-## Demo
-
-https://trivago.ahmedelazazy.com
-
 ## Stack
 
 - Vue
